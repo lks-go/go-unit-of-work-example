@@ -1,1 +1,2 @@
-# go-unit-of-work-example
+# Go unit of work pattern example
+

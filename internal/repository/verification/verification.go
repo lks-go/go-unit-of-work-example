@@ -19,7 +19,7 @@ type Repo struct {
 }
 
 func (s Repo) AddVerificationCode(ctx context.Context, userID string, code string) error {
-	q := "INSERT INTO verification (userID, code, vefified) VALUES ($1, $2)"
+	q := "INSERT INTO verification (user_id, code, vefified) VALUES ($1, $2)"
 	if _, err := s.conn.ExecContext(ctx, q, userID, code, false); err != nil {
 		return err
 	}

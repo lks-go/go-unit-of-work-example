@@ -47,7 +47,6 @@ func (s *Service) RegisterNewUser(ctx context.Context, name string, email string
 		if !errors.Is(err, entity.ErrNotFound) {
 			return fmt.Errorf("failed to get user by email: %w", err)
 		}
-		// that's what we need, email not found so just skip it
 	}
 	if u != nil {
 		return entity.ErrAlreadyRegistered

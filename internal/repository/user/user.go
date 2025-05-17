@@ -34,14 +34,14 @@ func (r Repo) GetUserByEmail(ctx context.Context, email string) (*entity.User, e
 		return nil, err
 	}
 
-	return nil, nil
+	return &u, nil
 }
 
 func (r Repo) AddNewUser(ctx context.Context, u entity.User) (string, error) {
 	var id string
 
 	q := "INSERT INTO users (name, email) VALUES ($1, $2) RETURNING id"
-	err := r.conn.QueryRowContext(ctx, q, u.Name, u.Email).Scan(&u.ID)
+	err := r.conn.QueryRowContext(ctx, q, u.Name, u.Email).Scan(&id)
 	if err != nil {
 		return id, err
 	}

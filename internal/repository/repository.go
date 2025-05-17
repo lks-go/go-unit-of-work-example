@@ -17,7 +17,7 @@ type RegisterUOW struct {
 	conn *sql.DB
 }
 
-func (r RegisterUOW) InTransaction(ctx context.Context, fn func(ctx context.Context, u service.UserRepo, v service.VerificationRepo) error) error {
+func (r RegisterUOW) InTransaction(ctx context.Context, fn func(ctx context.Context, u service.UserRepo, v service.VerificationRepo) error) (err error) {
 	tx, err := r.conn.BeginTx(ctx, nil)
 	if err != nil {
 		return fmt.Errorf("failed to begin transaction: %w", err)
@@ -38,7 +38,8 @@ func (r RegisterUOW) InTransaction(ctx context.Context, fn func(ctx context.Cont
 		}
 	}()
 
-	if err := fn(ctx, user.NewRepo(tx), verification.NewRepo(tx)); err != nil {
+	err = fn(ctx, user.NewRepo(tx), verification.NewRepo(tx))
+	if err != nil {
 		return fmt.Errorf("failed to execute transaction: %w", err)
 	}
 

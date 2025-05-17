@@ -14,5 +14,5 @@ func Parse() (*Config, error) {
 
 type Config struct {
 	Addr string `env:"LISTEN_ADDR" env-default:":8080"`
-	DSN  string `env:"DSN" env-default:"postgresql://admin:admin@localhost:5432/uow?sslmode=disable"`
+	DSN  string `env:"DSN" env-default:"postgresql://user:pass@localhost:6432/uow?sslmode=disable"`
 }
